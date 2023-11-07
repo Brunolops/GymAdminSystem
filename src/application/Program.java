@@ -34,6 +34,7 @@ public class Program {
 			System.out.println("5 - Pesquisar usuário por nome ou idade ou email");
 			System.out.println("0 - Sair do programa");
 			System.out.println();
+			System.out.println();
 
 			System.out.print("Select a choice: ");
 			int choice = sc.nextInt();
