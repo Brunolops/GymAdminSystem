@@ -7,7 +7,7 @@ import java.util.Scanner;
 import controller.Form;
 import controller.WriterFile;
 import entities.User;
-import view.Management;
+import view.UserManager;
 
 public class Program {
 
@@ -19,7 +19,7 @@ public class Program {
 
 		boolean continueProgram = true;
 
-		Management management = new Management();
+		UserManager management = new UserManager();
 
 		while (continueProgram) {
 
@@ -28,7 +28,7 @@ public class Program {
 			System.out.println("2 - Listar todos usuários cadastrados");
 			System.out.println("3 - Cadastrar nova pergunta no formulário");
 			System.out.println("4 - Deletar pergunta do formulário");
-			System.out.println("5 - Pesquisar usuário por nome ou idade ou email");
+			System.out.println("5 - Pesquisar usuário por nome");
 			System.out.println("0 - Sair do programa");
 			System.out.println();
 			System.out.println();
@@ -98,14 +98,18 @@ public class Program {
 				}
 				break;
 			}
+			case 5: {
+				System.out.println("Digite o nome do usuario desejado: ");
+				String findName = sc.nextLine();
+				management.searchUser(findName);
+				break;
+			}
 
 			case 0:
 				continueProgram = false;
 				System.out.println("Encerrando o programa");
 				break;
-
 			}
-
 		}
 		sc.close();
 	}

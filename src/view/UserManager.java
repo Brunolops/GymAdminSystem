@@ -6,11 +6,11 @@ import java.util.stream.Collectors;
 
 import entities.User;
 
-public class Management {
+public class UserManager {
 
 	private List<User> newUser;
 
-	public Management() {
+	public UserManager() {
 		this.newUser = new ArrayList<>();
 	}
 
@@ -34,9 +34,12 @@ public class Management {
 		}
 	}
 
-	public void searchUser(List<User> users, String targetName) {
-		List<User> equalsNames = users.stream().filter(user -> user.getName().equals(targetName))
+	public List<User> searchUser(String targetName) {
+		List<User> equalsNames = newUser.stream()
+				.filter(user -> user.getName().contains(targetName))
 				.collect(Collectors.toList());
+		equalsNames.forEach(user -> System.out.println(user));
+		return equalsNames;
 	}
 
 }

@@ -51,7 +51,4 @@ public class User {
 	public String toString() {
 		return name + "\n" + email + "\n" + age + "\n" + height + "\n";
 	}
-	
-	
-	
 }
