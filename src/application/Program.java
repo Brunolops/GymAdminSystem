@@ -1,17 +1,13 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import view.Register;
+import controller.Form;
+import controller.WriterFile;
+import entities.User;
+import view.Management;
 
 public class Program {
 
@@ -19,13 +15,14 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		String pathIn = "c:\\Windows\\Temp\\formulario.txt";
-
-		List<Register> list = new ArrayList<>();
+		Form form = new Form();
 
 		boolean continueProgram = true;
 
+		Management management = new Management();
+
 		while (continueProgram) {
+
 			System.out.println("----- Welcome to the System DevGym -----");
 			System.out.println("1 - Cadastrar o usuário");
 			System.out.println("2 - Listar todos usuários cadastrados");
@@ -36,61 +33,71 @@ public class Program {
 			System.out.println();
 			System.out.println();
 
-			System.out.print("Select a choice: ");
+			System.out.print("Selecione uma opção: ");
 			int choice = sc.nextInt();
 			sc.nextLine();
 
 			switch (choice) {
 			case 1:
-				try (BufferedReader bf = new BufferedReader(new FileReader(pathIn))) {
-					String readerTxt = bf.readLine();
-					while (readerTxt != null) {
-						System.out.println(" " + readerTxt);
-						readerTxt = bf.readLine();
-					}
+				try {
+
+					System.out.println(form.fileReader());
 					System.out.println();
 					System.out.println("Favor inserir conforme ordem solicitada:");
 					System.out.println();
 					System.out.print("Full Name: ");
-					String name = sc.nextLine();
+					String fullName = sc.nextLine();
 					System.out.print("Email: ");
 					String email = sc.nextLine();
 					System.out.print("Age: ");
-
 					int age = sc.nextInt();
 					System.out.print("Height: ");
 					double height = sc.nextDouble();
-
-					Register newUser = new Register(name, email, age, height);
-					list.add(newUser);
 
 					System.out.println();
 					System.out.println("Dados do usuario:");
 					System.out.println();
 
-					System.out.println(newUser);
+					User newUser = new User(fullName, email, age, height);
+					management.newUser(newUser);
 
-					int count = list.size();
-
-					String[] fullName = name.split(" ");
-					String pathOut = count + "-" + String.join("", fullName).toUpperCase() + ".txt";
-					File file = new File("c:\\Windows\\Temp\\" + pathOut);
-
-					try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
-						bw.write(newUser.toString());
-					}
-					count++;
+					management.listUsers();
+					WriterFile write = new WriterFile(newUser);
+					write.fileWrite(newUser.toString());
 
 				} catch (IOException e) {
-					System.out.println("Error:" + e.getMessage());
+
+					e.printStackTrace();
 				}
+
 				break;
 
-			case 2:
-				for (Register register : list) {
-					System.out.println(list.indexOf(register) + 1  + " - " + register.getName());
+			case 2: {
+				management.listNames();
+				break;
+			}
+
+			case 3: {
+				System.out.print("Digite a nova pergunta: ");
+				String question = sc.nextLine();
+				try {
+					form.addNewQuestion(question);
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
 				}
 				break;
+			}
+			case 4: {
+				try {
+					System.out.println(form.fileReader());
+					System.out.print("Numero da pergunta a ser excluida: ");
+					int question = sc.nextInt();
+					form.removeQuestion(question);
+				} catch (IOException e) {
+					System.out.println(e.getMessage());
+				}
+				break;
+			}
 
 			case 0:
 				continueProgram = false;
@@ -100,6 +107,7 @@ public class Program {
 			}
 
 		}
+		sc.close();
 	}
 
 }

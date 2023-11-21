@@ -1,16 +1,13 @@
-package view;
+package entities;
 
-public class Register {
+public class User {
+
 	private String name;
 	private String email;
 	private Integer age;
 	private Double height;
 
-	public Register() {
-
-	}
-
-	public Register(String name, String email, Integer age, Double height) {
+	public User(String name, String email, Integer age, Double height) {
 
 		this.name = name;
 		this.email = email;
@@ -52,10 +49,9 @@ public class Register {
 
 	@Override
 	public String toString() {
-		return name + "\n" + email + "\n" + age + "\n" + String.format("%.2f", height) + "\n";
-		
+		return name + "\n" + email + "\n" + age + "\n" + height + "\n";
 	}
 	
 	
-
+	
 }
