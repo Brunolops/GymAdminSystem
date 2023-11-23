@@ -22,7 +22,7 @@ public class WriterFile {
 
 	private String fileName() {
 		count++;
-		String[] fullName = user.getName().split(" ");
+		String fullName = user.getName().concat(user.getlastName());
 		String fileName = count + "-" + String.join("", fullName).toUpperCase() + ".txt";
 		return fileName;
 	}

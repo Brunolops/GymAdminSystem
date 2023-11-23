@@ -30,7 +30,7 @@ public class UserManager {
 
 	public void listNames() {
 		for (User user : newUser) {
-			System.out.println(newUser.indexOf(user) + 1 + " - " + user.getName());
+			System.out.println(newUser.indexOf(user) + 1 + " - " + user.getName() + " " + user.getlastName());
 		}
 	}
 

@@ -7,14 +7,13 @@ import java.util.Scanner;
 import controller.Form;
 import controller.WriterFile;
 import entities.User;
+import exceptions.UserException;
 import view.UserManager;
 
 public class Program {
 
 	public static void main(String[] args) {
-		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);
-
+		Scanner sc = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
 		Form form = new Form();
 
 		boolean continueProgram = true;
@@ -38,38 +37,38 @@ public class Program {
 			sc.nextLine();
 
 			switch (choice) {
-			case 1:
+			case 1: {
 				try {
-
 					System.out.println(form.fileReader());
 					System.out.println();
-					System.out.println("Favor inserir conforme ordem solicitada:");
+					System.out.println("Favor preencher dados conforme ordem solicitada:");
 					System.out.println();
-					System.out.print("Full Name: ");
-					String fullName = sc.nextLine();
+					System.out.print("First Name: ");
+					String name = sc.nextLine();
+					System.out.print("Last Name: ");
+					String lastName = sc.nextLine();
 					System.out.print("Email: ");
 					String email = sc.nextLine();
 					System.out.print("Age: ");
 					int age = sc.nextInt();
 					System.out.print("Height: ");
 					double height = sc.nextDouble();
-
 					System.out.println();
 					System.out.println("Dados do usuario:");
 					System.out.println();
 
-					User newUser = new User(fullName, email, age, height);
+					User newUser = new User(name,lastName, email, age, height);
 					management.newUser(newUser);
 
 					management.listUsers();
 					WriterFile write = new WriterFile(newUser);
 					write.fileWrite(newUser.toString());
-
 				} catch (IOException e) {
-
-					e.printStackTrace();
+					e.getMessage();
+				} catch (UserException e) {
+					e.getMessage();
 				}
-
+			}
 				break;
 
 			case 2: {
